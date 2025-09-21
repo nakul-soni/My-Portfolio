@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Simplified Burp Suite mark for local use -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Burp Suite logo">
+	<defs>
+		<linearGradient id="b" x1="0" x2="1">
+			<stop offset="0" stop-color="#ff7a00" />
+			<stop offset="1" stop-color="#ff3b00" />
+		</linearGradient>
+	</defs>
+	<rect width="128" height="128" rx="20" fill="transparent"/>
+	<circle cx="64" cy="44" r="28" fill="url(#b)" fill-opacity="0.18" />
+	<path d="M42 64 C52 74, 76 76, 86 66" stroke="#ff5a1a" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.95"/>
+	<text x="64" y="104" font-family="Inter, Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle" opacity="0.95">Burp Suite</text>
+</svg>
