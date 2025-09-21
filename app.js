@@ -89,7 +89,7 @@ angular.module('portfolioApp', ['ngAnimate'])
             {
                 title: 'Intrusion Detection System',
                 description: 'A network-based Intrusion Detection System (IDS) that captures and analyzes suspicious packets and scanning attempts from unknown sources in real time, while generating detailed security logs for threat analysis.',
-                image: 'https://as2.ftcdn.net/v2/jpg/16/35/69/03/1000_F_1635690399_5dMIIlJOAohEfLUsBcGzCOdngvX9QTi0.jpg',
+                image: './Images/IDS thumbnail.jpg',
                 liveUrl: null,
                 githubUrl: 'https://github.com/nakul-soni/Intrusion-Detection-System',
                 technologies: ['Cyber Security', 'Computer Networks', 'Kali Linux', 'Wireshark', 'Python'],
