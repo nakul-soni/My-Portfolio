@@ -1,4 +1,5 @@
 // Node.js Backend Server for Contact Form
+require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -21,7 +22,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail', // You can use other services like 'outlook', 'yahoo', etc.
     auth: {
         user: process.env.EMAIL_USER || 'nakulsoni2006@gmail.com', // Replace with your email
-        pass: process.env.EMAIL_PASS || '12345678' // Replace with your app password
+        pass: process.env.EMAIL_PASS || 'zvuiqsfqdxydrawa' // Replace with your app password
     }
 });
 
@@ -66,7 +67,7 @@ app.post('/api/contact', async (req, res) => {
                 <h2>Thank you for your message!</h2>
                 <p>Hi ${name},</p>
                 <p>Thank you for reaching out through my portfolio website. I have received your message and will get back to you as soon as possible.</p>
-                <p>Best regards,<br>John Doe</p>
+                <p>Best regards,<br>Nakul Soni</p>
                 <hr>
                 <p><em>This is an automated response. Please do not reply to this email.</em></p>
             `
