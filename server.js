@@ -9,8 +9,14 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+//Allow Requests from github pages
+app.use(cors({
+    origin: 'https://nakul-soni.github.io/My-Portfolio/'
+}));
+
+app.use(express.json()); // parse JSON request bodies
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

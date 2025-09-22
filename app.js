@@ -387,7 +387,7 @@ angular.module('portfolioApp', ['ngAnimate'])
         angular.element(window).on('scroll', $scope.handleScroll);
     })
 
-    .service('PortfolioService', function($http, $q) {
+    .service('PortfolioService', function($http) {
         const backendURL = 'https://my-portfolio-cig5.onrender.com/api/contact'
         return {
             submitContactForm: function(formData) {
