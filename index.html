@@ -249,13 +249,13 @@ I am a web and mobile application developer with expertise in creating secure, u
                     </div>
                     <form class="contact-form" ng-submit="submitForm()" name="contactForm">
                         <div class="form-group">
-                            <input type="text" ng-model="formData.name" placeholder="Your Name" required>
+                            <input type="text" id="name" ng-model="formData.name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" ng-model="formData.email" placeholder="Your Email" required>
+                            <input type="email" id="email" ng-model="formData.email" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <textarea ng-model="formData.message" placeholder="Your Message" rows="5" required></textarea>
+                            <textarea ng-model="formData.message" id="message" placeholder="Your Message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-disabled="formSubmitting">
                             <span ng-if="!formSubmitting">Send Message</span>
