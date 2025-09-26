@@ -9,19 +9,10 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const allowedOrigins = [
-  "https://nakul-soni.github.io"
-];
-
 //Allow Requests from github pages
 app.use(cors({
-  origin: "https://nakul-soni.github.io", // allow your GitHub Pages site
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"]
+    origin: 'https://nakul-soni.github.io'
 }));
-
-// Handle OPTIONS requests globally
-app.options("*", cors());
 
 app.use(express.json()); // parse JSON request bodies
 
