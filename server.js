@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 //Allow Requests from github pages
 app.use(cors({
-    origin: 'https://nakul-soni.github.io'
+    origin: '*'
 }));
 
 app.use(express.json()); // parse JSON request bodies
