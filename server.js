@@ -9,10 +9,26 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  "https://nakul-soni.github.io"
+];
+
 //Allow Requests from github pages
 app.use(cors({
-    origin: '*'
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow mobile/curl
+    if (allowedOrigins.includes(origin) || origin === "*") {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "OPTIONS"],   // Allow preflight
+  allowedHeaders: ["Content-Type", "Authorization"], // Allow headers your frontend sends
 }));
+
+// Handle OPTIONS requests globally
+app.options("*", cors());
 
 app.use(express.json()); // parse JSON request bodies
 
