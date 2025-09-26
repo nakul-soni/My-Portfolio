@@ -15,16 +15,9 @@ const allowedOrigins = [
 
 //Allow Requests from github pages
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow mobile/curl
-    if (allowedOrigins.includes(origin) || origin === "*") {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "OPTIONS"],   // Allow preflight
-  allowedHeaders: ["Content-Type", "Authorization"], // Allow headers your frontend sends
+  origin: "https://nakul-soni.github.io", // allow your GitHub Pages site
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
 }));
 
 // Handle OPTIONS requests globally
