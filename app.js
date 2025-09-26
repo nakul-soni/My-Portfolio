@@ -388,7 +388,7 @@ angular.module('portfolioApp', ['ngAnimate'])
     })
 
     .service('PortfolioService', function($http) {
-        const backendURL = ' https://my-portfolio-6p1w.onrender.com/api/contact'
+        const backendURL = 'https://my-portfolio-6p1w.onrender.com/api/contact'
         return {
             submitContactForm: function(formData) {
                 return $http.post(backendURL, formData)
