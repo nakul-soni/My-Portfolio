@@ -132,7 +132,11 @@ angular.module('portfolioApp', ['ngAnimate'])
                 'firebase': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/firebase.svg',
                 'kalilinux': 'Images/kali-linux.svg',
                 'wireshark': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/wireshark.svg',
-                'burpsuite': 'Images/burpsuite.svg'
+                'burpsuite': 'Images/burpsuite.svg',
+                // Fix slugs that differ from naive normalization
+                'nodejs': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/nodedotjs.svg',
+                'expressjs': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/express.svg',
+                'java': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/java.svg'
             };
             if (explicitUrls[normalized]) return explicitUrls[normalized];
             return `https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/${normalized}.svg`;
