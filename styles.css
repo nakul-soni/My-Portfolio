@@ -1657,21 +1657,39 @@ section {
 }
 
 /* Notification toasts */
-.notification {
+.notification-container {
     position: fixed;
+    top: 16px;
     right: 16px;
-    bottom: 16px;
-    padding: 12px 16px;
-    border-radius: 10px;
-    color: #ffffff;
-    background: rgba(34, 34, 34, 0.95);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     z-index: 9999;
+    pointer-events: none; /* let clicks pass through except on toasts */
 }
-.notification.success { background: rgba(27, 94, 32, 0.95); }
-.notification.error { background: rgba(183, 28, 28, 0.95); }
+
+.notification {
+    min-width: 280px;
+    max-width: 420px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(34, 34, 34, 0.96), rgba(24,24,24,0.96));
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35), 0 0 18px rgba(0,212,255,0.06);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    backdrop-filter: blur(6px);
+    pointer-events: auto; /* clickable if needed */
+}
+.notification.success {
+    background: linear-gradient(135deg, rgba(20, 110, 50, 0.96), rgba(16, 86, 40, 0.96));
+    border-color: rgba(76, 175, 80, 0.35);
+}
+.notification.error {
+    background: linear-gradient(135deg, rgba(140, 30, 30, 0.96), rgba(110, 24, 24, 0.96));
+    border-color: rgba(244, 67, 54, 0.35);
+}
 .notification.show { opacity: 1; transform: translateY(0); }
+.notification:hover { box-shadow: 0 14px 32px rgba(0,0,0,0.45), 0 0 22px rgba(0,212,255,0.08); }
