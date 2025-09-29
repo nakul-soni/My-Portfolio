@@ -10,8 +10,11 @@ const PORT = process.env.PORT || 3000;
 
 // Allow requests from your frontend (GitHub Pages)
 app.use(cors({
-    origin: 'https://nakul-soni.github.io'
+    origin: 'https://nakul-soni.github.io',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type']
 }));
+app.options('/api/contact', cors());
 
 // Parse JSON request bodies
 app.use(express.json());
@@ -75,8 +78,21 @@ app.post('/api/contact', async (req, res) => {
         res.json({ success: true, message: 'Message sent successfully!' });
 
     } catch (error) {
-        console.error('Contact form error:', error);
-        const errorMessage = error?.message || 'Failed to send message. Please try again later.';
+        // Log detailed SendGrid error if present
+        let errorMessage = error?.message || 'Failed to send message. Please try again later.';
+        if (error?.response?.body) {
+            try {
+                const sgBody = error.response.body;
+                console.error('SendGrid error body:', sgBody);
+                if (Array.isArray(sgBody.errors) && sgBody.errors.length > 0) {
+                    errorMessage = sgBody.errors.map(e => e.message).join('; ');
+                }
+            } catch (e) {
+                // ignore parsing issues
+            }
+        } else {
+            console.error('Contact form error:', error);
+        }
         res.status(500).json({ success: false, message: errorMessage });
     }
 });
