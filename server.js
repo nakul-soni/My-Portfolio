@@ -33,10 +33,12 @@ app.post('/api/contact', async (req, res) => {
         }
 
         // Send owner notification
-        await sgMail.send({
+        const ownerResponse = await sgMail.send({
             from: process.env.SENDGRID_FROM,
             to: process.env.EMAIL_USER,
+            replyTo: email,
             subject: `New Contact Form Submission from ${name}`,
+            text: `New contact submission\nName: ${name}\nEmail: ${email}\nMessage:\n${message}`,
             html: `
                 <h2>New Contact Form Submission</h2>
                 <p><strong>Name:</strong> ${name}</p>
@@ -47,12 +49,16 @@ app.post('/api/contact', async (req, res) => {
                 <p><em>Sent from portfolio website contact form.</em></p>
             `
         });
+        if (ownerResponse && ownerResponse[0] && ownerResponse[0].statusCode) {
+            console.log('SendGrid owner mail status:', ownerResponse[0].statusCode);
+        }
 
         // Confirmation email to user
-        await sgMail.send({
+        const userResponse = await sgMail.send({
             from: process.env.SENDGRID_FROM,
             to: email,
             subject: 'Thank you for contacting me!',
+            text: `Hi ${name},\n\nYour message has been received. I will get back to you soon.\n\nBest regards,\nNakul Soni\n\n(Automated response — do not reply)`,
             html: `
                 <h2>Thank you!</h2>
                 <p>Hi ${name},</p>
@@ -62,6 +68,9 @@ app.post('/api/contact', async (req, res) => {
                 <p><em>Automated response. Do not reply.</em></p>
             `
         });
+        if (userResponse && userResponse[0] && userResponse[0].statusCode) {
+            console.log('SendGrid user mail status:', userResponse[0].statusCode);
+        }
 
         res.json({ success: true, message: 'Message sent successfully!' });
 
