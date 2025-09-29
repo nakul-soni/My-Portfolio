@@ -77,6 +77,11 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Favicon - return no content to avoid 404 noise in console
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).end();
+});
+
 // Serve index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
