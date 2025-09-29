@@ -1,5 +1,5 @@
 // server.js - Render-ready Node.js Contact Form Backend
-require("dotenv").config();
+require("dotenv").config({ path: 'dotenv.env' });
 const express = require('express');
 const cors = require('cors');
 const sgMail = require('@sendgrid/mail');
