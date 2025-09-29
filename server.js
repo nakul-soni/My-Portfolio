@@ -2,7 +2,7 @@
 require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const path = require('path');
 
 const app = express();
@@ -20,14 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname)));
 
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER, // your email
-        pass: process.env.EMAIL_PASS  // your app password
-    }
-});
+// SendGrid configuration
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
@@ -38,8 +32,9 @@ app.post('/api/contact', async (req, res) => {
             return res.status(400).json({ success: false, message: 'All fields are required' });
         }
 
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
+        // Send owner notification
+        await sgMail.send({
+            from: process.env.SENDGRID_FROM,
             to: process.env.EMAIL_USER,
             subject: `New Contact Form Submission from ${name}`,
             html: `
@@ -51,13 +46,11 @@ app.post('/api/contact', async (req, res) => {
                 <hr>
                 <p><em>Sent from portfolio website contact form.</em></p>
             `
-        };
-
-        await transporter.sendMail(mailOptions);
+        });
 
         // Confirmation email to user
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+        await sgMail.send({
+            from: process.env.SENDGRID_FROM,
             to: email,
             subject: 'Thank you for contacting me!',
             html: `
@@ -74,7 +67,8 @@ app.post('/api/contact', async (req, res) => {
 
     } catch (error) {
         console.error('Contact form error:', error);
-        res.status(500).json({ success: false, message: 'Failed to send message. Please try again later.' });
+        const errorMessage = error?.message || 'Failed to send message. Please try again later.';
+        res.status(500).json({ success: false, message: errorMessage });
     }
 });
 
