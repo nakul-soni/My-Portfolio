@@ -1,95 +1,76 @@
+// server.js
+
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Allow requests only from your GitHub Pages (and localhost for dev)
-app.use(cors({
-    origin: [
-        "https://nakul-soni.github.io",
-        "http://localhost:3000"
-    ]
-}));
-
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: "https://nakul-soni.github.io", // your frontend
+  methods: ["POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+app.use(bodyParser.json());
 
-// Serve static files from "public" folder (create it and put assets there)
-app.use(express.static(path.join(__dirname, "public")));
-
-// Email configuration
+// Configure Nodemailer with Gmail SMTP
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER, // Gmail address
+    pass: process.env.EMAIL_PASS  // Gmail App Password
+  }
 });
 
-// Contact form endpoint
+// Contact API
 app.post("/api/contact", async (req, res) => {
-    try {
-        const { name, email, message } = req.body;
+  try {
+    const { name, email, message } = req.body;
 
-        if (!name || !email || !message) {
-            return res.status(400).json({ success: false, message: "All fields are required" });
-        }
-
-        // Send main email to you
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
-            subject: `New Contact Form Submission from ${name}`,
-            html: `
-                <h2>New Contact Form Submission</h2>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Message:</strong></p>
-                <p>${message.replace(/\n/g, "<br>")}</p>
-            `
-        });
-
-        // Send confirmation to user
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: "Thank you for contacting me!",
-            html: `
-                <h2>Thank you for your message!</h2>
-                <p>Hi ${name},</p>
-                <p>I have received your message and will get back to you as soon as possible.</p>
-                <p>Best regards,<br>Nakul Soni</p>
-            `
-        });
-
-        res.json({ success: true, message: "Message sent successfully!" });
-
-    } catch (error) {
-        console.error("Contact form error:", error);
-        res.status(500).json({ success: false, message: "Failed to send message. Please try again later." });
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, message: "All fields are required." });
     }
-});
 
-// Health check endpoint
-app.get("/api/health", (req, res) => {
-    res.json({ status: "OK", message: "Server is running" });
-});
+    // Mail to yourself
+    await transporter.sendMail({
+      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: `📩 New message from ${name}`,
+      html: `
+        <h3>New Portfolio Message</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Message:</b><br>${message.replace(/\n/g, "<br>")}</p>
+      `
+    });
 
-// Serve index.html
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    // Confirmation mail to user
+    await transporter.sendMail({
+      from: `"Nakul Portfolio" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "✅ Thanks for contacting me!",
+      html: `
+        <p>Hi ${name},</p>
+        <p>Thank you for reaching out via my portfolio website. I’ll get back to you soon!</p>
+        <p>— Nakul</p>
+      `
+    });
+
+    res.json({ success: true, message: "Message sent successfully!" });
+
+  } catch (error) {
+    console.error("Email error:", error);
+    res.status(500).json({ success: false, message: "Failed to send message. Please try again later." });
+  }
 });
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
-
-module.exports = app;
