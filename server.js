@@ -52,8 +52,10 @@ app.post('/api/contact', async (req, res) => {
                 <p><em>Sent from portfolio website contact form.</em></p>
             `
         });
-        if (ownerResponse && ownerResponse[0] && ownerResponse[0].statusCode) {
-            console.log('SendGrid owner mail status:', ownerResponse[0].statusCode);
+        if (ownerResponse && ownerResponse[0]) {
+            const status = ownerResponse[0].statusCode;
+            const msgId = ownerResponse[0].headers && (ownerResponse[0].headers['x-message-id'] || ownerResponse[0].headers['x-message-id'.toLowerCase()]);
+            console.log('SendGrid owner mail status:', status, 'messageId:', msgId || 'n/a');
         }
 
         // Confirmation email to user
@@ -71,8 +73,10 @@ app.post('/api/contact', async (req, res) => {
                 <p><em>Automated response. Do not reply.</em></p>
             `
         });
-        if (userResponse && userResponse[0] && userResponse[0].statusCode) {
-            console.log('SendGrid user mail status:', userResponse[0].statusCode);
+        if (userResponse && userResponse[0]) {
+            const status = userResponse[0].statusCode;
+            const msgId = userResponse[0].headers && (userResponse[0].headers['x-message-id'] || userResponse[0].headers['x-message-id'.toLowerCase()]);
+            console.log('SendGrid user mail status:', status, 'messageId:', msgId || 'n/a');
         }
 
         res.json({ success: true, message: 'Message sent successfully!' });
