@@ -128,15 +128,27 @@ angular.module('portfolioApp', ['ngAnimate'])
             const raw = String(skillName || '');
             const normalized = raw.toLowerCase().replace(/\s+|\.|#/g, '');
             const explicitUrls = {
-                'angular': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/angular.svg',
-                'firebase': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/firebase.svg',
+                // Prefer colored Devicon logos for popular tech
+                'react': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+                'angular': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',
+                'typescript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+                'html5': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+                'css3': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+                'nodejs': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+                'expressjs': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
+                'python': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+                'java': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+                'php': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+                'mongodb': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+                'mysql': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+                'firebase': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg',
+                'git': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+                'figma': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',
+
+                // Keep local or simple-icons for items not in Devicon
                 'kalilinux': 'Images/kali-linux.svg',
                 'wireshark': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/wireshark.svg',
-                'burpsuite': 'Images/burpsuite.svg',
-                // Fix slugs that differ from naive normalization
-                'nodejs': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/nodedotjs.svg',
-                'expressjs': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/express.svg',
-                'java': 'https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/java.svg'
+                'burpsuite': 'Images/burpsuite.svg'
             };
             if (explicitUrls[normalized]) return explicitUrls[normalized];
             return `https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/${normalized}.svg`;
