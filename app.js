@@ -89,7 +89,7 @@ angular.module('portfolioApp', ['ngAnimate'])
             {
                 title: 'Chatting Application',
                 description: 'A real-time chat application built with Firebase Authentication, enabling secure sign-up/login and seamless group messaging.',
-                image: './Images/ChatApp thumbnail.jpg',
+                image: 'Images/ChatApp thumbnail.jpg',
                 githubUrl: 'https://github.com/nakul-soni/ChatApp',
                 technologies: ['Java', 'Firebase', 'Realtime DB', 'Firebase Auth', 'Android'],
                 hovered: false
@@ -97,7 +97,7 @@ angular.module('portfolioApp', ['ngAnimate'])
             {
                 title: 'Intrusion Detection System',
                 description: 'A network-based IDS that captures and analyzes suspicious packets and scanning attempts, while generating detailed logs.',
-                image: './Images/IDS thumbnail.jpg',
+                image: 'Images/IDS thumbnail.jpg',
                 githubUrl: 'https://github.com/nakul-soni/Intrusion-Detection-System',
                 technologies: ['Cyber Security', 'Networks', 'Kali Linux', 'Wireshark', 'Python'],
                 hovered: false
@@ -105,7 +105,7 @@ angular.module('portfolioApp', ['ngAnimate'])
             {
                 title: 'PackPal - Group Logistics Planner',
                 description: 'A responsive logistics planner with shared checklists, categorized items, and real-time management.',
-                image: './Images/PackPal Thumbnail.jpg',
+                image: 'Images\PackPal Thumbnail.jpg',
                 liveUrl: 'https://nakul-soni.github.io/PackPal-Groups-Logistics-Planner-/',
                 githubUrl: 'https://github.com/nakul-soni/PackPal-Groups-Logistics-Planner-',
                 technologies: ['HTML', 'CSS', 'JavaScript', 'Firebase', 'Bootstrap'],
