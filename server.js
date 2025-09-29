@@ -1,88 +1,95 @@
-// server.js
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
 const path = require("path");
-const sgMail = require("@sendgrid/mail");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configure SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// Allow requests only from your GitHub Pages (and localhost for dev)
+app.use(cors({
+    origin: [
+        "https://nakul-soni.github.io",
+        "http://localhost:3000"
+    ]
+}));
 
 // Middleware
-app.use(cors({ origin: "https://nakul-soni.github.io" })); // Allow GitHub Pages frontend
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname)));
+app.use(express.urlencoded({ extended: true }));
 
-// Root route (health check / portfolio)
-app.get("/", (req, res) => {
-  res.send("Portfolio backend is running 🚀");
+// Serve static files from "public" folder (create it and put assets there)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Email configuration
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
 });
 
 // Contact form endpoint
 app.post("/api/contact", async (req, res) => {
-  try {
-    const { name, email, message } = req.body;
+    try {
+        const { name, email, message } = req.body;
 
-    if (!name || !email || !message) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All fields are required" });
+        if (!name || !email || !message) {
+            return res.status(400).json({ success: false, message: "All fields are required" });
+        }
+
+        // Send main email to you
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER,
+            subject: `New Contact Form Submission from ${name}`,
+            html: `
+                <h2>New Contact Form Submission</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Message:</strong></p>
+                <p>${message.replace(/\n/g, "<br>")}</p>
+            `
+        });
+
+        // Send confirmation to user
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Thank you for contacting me!",
+            html: `
+                <h2>Thank you for your message!</h2>
+                <p>Hi ${name},</p>
+                <p>I have received your message and will get back to you as soon as possible.</p>
+                <p>Best regards,<br>Nakul Soni</p>
+            `
+        });
+
+        res.json({ success: true, message: "Message sent successfully!" });
+
+    } catch (error) {
+        console.error("Contact form error:", error);
+        res.status(500).json({ success: false, message: "Failed to send message. Please try again later." });
     }
+});
 
-    // Email to portfolio owner
-    const ownerMsg = {
-      to: process.env.CONTACT_RECEIVER_EMAIL || "nakulsoni2006@gmail.com",
-      from: process.env.SENDGRID_FROM, // must be verified in SendGrid
-      subject: `New Contact Form Submission from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${(message || "").replace(/\n/g, "<br>")}</p>
-        <hr>
-        <p><em>This message was sent from your portfolio website contact form.</em></p>
-      `,
-    };
+// Health check endpoint
+app.get("/api/health", (req, res) => {
+    res.json({ status: "OK", message: "Server is running" });
+});
 
-    // Confirmation email to user
-    const confirmationMsg = {
-      to: email,
-      from: process.env.SENDGRID_FROM, // must be verified in SendGrid
-      subject: "Thank you for contacting me!",
-      html: `
-        <h2>Thank you for your message!</h2>
-        <p>Hi ${name},</p>
-        <p>Thank you for reaching out through my portfolio website. I have received your message and will get back to you soon.</p>
-        <p>Best regards,<br>Nakul Soni</p>
-        <hr>
-        <p><em>This is an automated response.</em></p>
-      `,
-    };
-
-    // Send both emails in parallel
-    await Promise.all([sgMail.send(ownerMsg), sgMail.send(confirmationMsg)]);
-
-    res.json({ success: true, message: "Message sent successfully!" });
-  } catch (error) {
-    console.error("SendGrid error:", error);
-    if (error.response && error.response.body) {
-      console.error("SendGrid response body:", error.response.body);
-    }
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to send message. Please try again later." });
-  }
+// Serve index.html
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Visit http://localhost:${PORT} to view your portfolio`);
+    console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = app;
