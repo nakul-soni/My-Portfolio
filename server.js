@@ -58,7 +58,7 @@ app.post('/api/contact', async (req, res) => {
 
         // Confirmation email to user
         const userResponse = await resend.emails.send({
-            from: 'nakulsoni2006@gmail.com',
+            from: process.env.RESEND_FROM,
             to: email,
             subject: 'Thank you for contacting me!',
             text: `Hi ${name},\n\nYour message has been received. I will get back to you soon.\n\nBest regards,\nNakul Soni\n\n(Automated response — do not reply)`,
