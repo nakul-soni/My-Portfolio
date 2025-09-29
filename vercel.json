@@ -8,6 +8,14 @@
     { "src": "animations.js", "use": "@vercel/static" },
     { "src": "Images/*", "use": "@vercel/static" }
   ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "x-vercel-toolbar", "value": "hidden" }
+      ]
+    }
+  ],
   "routes": [
     { "src": "/api/contact", "dest": "/api/contact.js" },
     { "src": "/api/health", "dest": "/api/health.js" },
