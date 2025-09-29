@@ -2,7 +2,7 @@
 require("dotenv").config({ path: 'dotenv.env' });
 const express = require('express');
 const cors = require('cors');
-const sgMail = require('@sendgrid/mail');
+const { Resend } = require('resend');
 const path = require('path');
 
 const app = express();
@@ -23,8 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname)));
 
-// SendGrid configuration
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// Resend configuration
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
@@ -36,10 +36,10 @@ app.post('/api/contact', async (req, res) => {
         }
 
         // Send owner notification
-        const ownerResponse = await sgMail.send({
-            from: process.env.SENDGRID_FROM,
+        const ownerResponse = await resend.emails.send({
+            from: process.env.RESEND_FROM,
             to: process.env.EMAIL_USER,
-            replyTo: email,
+            reply_to: email,
             subject: `New Contact Form Submission from ${name}`,
             text: `New contact submission\nName: ${name}\nEmail: ${email}\nMessage:\n${message}`,
             html: `
@@ -52,15 +52,13 @@ app.post('/api/contact', async (req, res) => {
                 <p><em>Sent from portfolio website contact form.</em></p>
             `
         });
-        if (ownerResponse && ownerResponse[0]) {
-            const status = ownerResponse[0].statusCode;
-            const msgId = ownerResponse[0].headers && (ownerResponse[0].headers['x-message-id'] || ownerResponse[0].headers['x-message-id'.toLowerCase()]);
-            console.log('SendGrid owner mail status:', status, 'messageId:', msgId || 'n/a');
+        if (ownerResponse && ownerResponse.id) {
+            console.log('Resend owner mail id:', ownerResponse.id);
         }
 
         // Confirmation email to user
-        const userResponse = await sgMail.send({
-            from: process.env.SENDGRID_FROM,
+        const userResponse = await resend.emails.send({
+            from: process.env.RESEND_FROM,
             to: email,
             subject: 'Thank you for contacting me!',
             text: `Hi ${name},\n\nYour message has been received. I will get back to you soon.\n\nBest regards,\nNakul Soni\n\n(Automated response — do not reply)`,
@@ -73,30 +71,15 @@ app.post('/api/contact', async (req, res) => {
                 <p><em>Automated response. Do not reply.</em></p>
             `
         });
-        if (userResponse && userResponse[0]) {
-            const status = userResponse[0].statusCode;
-            const msgId = userResponse[0].headers && (userResponse[0].headers['x-message-id'] || userResponse[0].headers['x-message-id'.toLowerCase()]);
-            console.log('SendGrid user mail status:', status, 'messageId:', msgId || 'n/a');
+        if (userResponse && userResponse.id) {
+            console.log('Resend user mail id:', userResponse.id);
         }
 
         res.json({ success: true, message: 'Message sent successfully!' });
 
     } catch (error) {
-        // Log detailed SendGrid error if present
-        let errorMessage = error?.message || 'Failed to send message. Please try again later.';
-        if (error?.response?.body) {
-            try {
-                const sgBody = error.response.body;
-                console.error('SendGrid error body:', sgBody);
-                if (Array.isArray(sgBody.errors) && sgBody.errors.length > 0) {
-                    errorMessage = sgBody.errors.map(e => e.message).join('; ');
-                }
-            } catch (e) {
-                // ignore parsing issues
-            }
-        } else {
-            console.error('Contact form error:', error);
-        }
+        console.error('Contact form error:', error);
+        const errorMessage = error?.message || 'Failed to send message. Please try again later.';
         res.status(500).json({ success: false, message: errorMessage });
     }
 });
