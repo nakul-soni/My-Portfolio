@@ -272,7 +272,7 @@ angular.module('portfolioApp', ['ngAnimate'])
     // Backend Service
     // ========================
     .constant('API_CONFIG', {
-        backendURL: 'https://my-portfolio-pftj.onrender.com/api/contact'
+        backendURL: 'https://my-portfolio-n4o8.onrender.com/api/contact'
     })
     .service('PortfolioService', function($http, API_CONFIG) {
         return {
