@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "analytics": true,
+  "speedInsights": true,
   "builds": [
     { "src": "api/*.js", "use": "@vercel/node" },
     { "src": "index.html", "use": "@vercel/static" },
