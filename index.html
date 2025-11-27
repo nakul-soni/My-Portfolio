@@ -298,7 +298,31 @@ I am a web and mobile application developer with expertise in creating secure, u
     <script src="animations.js"></script>
     <!-- Vercel Analytics & Speed Insights -->
     <!-- Note: These will be automatically injected by Vercel when Analytics is enabled in your project settings -->
-    <!-- No manual scripts needed - Vercel handles this automatically on deployment -->
+    <!-- Verification and manual fallback -->
+    <script>
+      // Check if Vercel Analytics is loaded (for debugging)
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var analyticsLoaded = false;
+          
+          // Check for Vercel's auto-injected analytics
+          if (window.va || 
+              document.querySelector('script[src*="vercel-analytics"]') || 
+              document.querySelector('script[src*="va.vercel"]') ||
+              document.querySelector('script[src*="analytics"]')) {
+            console.log('✅ Vercel Analytics detected (auto-injected)');
+            analyticsLoaded = true;
+          }
+          
+          // If not loaded after 3 seconds, it might not be enabled in dashboard
+          if (!analyticsLoaded) {
+            console.warn('⚠️ Vercel Analytics not detected.');
+            console.warn('📋 To enable: Vercel Dashboard → Your Project → Settings → Analytics → Enable Web Analytics');
+            console.warn('💡 Note: Analytics only works on Vercel deployments, not localhost');
+          }
+        }, 3000);
+      });
+    </script>
     <script>
         // If running via file:// and the project-relative image doesn't exist, try the user's provided path
         (function() {
