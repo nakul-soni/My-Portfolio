@@ -297,31 +297,40 @@ I am a web and mobile application developer with expertise in creating secure, u
     <script src="app.js"></script>
     <script src="animations.js"></script>
     <!-- Vercel Analytics & Speed Insights -->
-    <!-- Note: These will be automatically injected by Vercel when Analytics is enabled in your project settings -->
-    <!-- Verification and manual fallback -->
     <script>
-      // Check if Vercel Analytics is loaded (for debugging)
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var analyticsLoaded = false;
+      // Only load on Vercel deployment (not localhost)
+      (function() {
+        var hostname = window.location.hostname;
+        var isVercelDeployment = hostname.includes('vercel.app') || 
+                                 hostname.includes('vercel.com') ||
+                                 (hostname !== 'localhost' && hostname !== '127.0.0.1');
+        
+        if (isVercelDeployment) {
+          // Load Vercel Analytics
+          var va = document.createElement('script');
+          va.src = 'https://va.vercel-scripts.com/v1/script.debug.js';
+          va.type = 'text/javascript';
+          va.async = true;
+          va.crossOrigin = 'anonymous';
+          va.onload = function() {
+            console.log('✅ Vercel Analytics loaded successfully');
+          };
+          va.onerror = function() {
+            console.warn('⚠️ Failed to load Vercel Analytics. Enable it in: Vercel Dashboard → Settings → Analytics');
+          };
+          document.head.appendChild(va);
           
-          // Check for Vercel's auto-injected analytics
-          if (window.va || 
-              document.querySelector('script[src*="vercel-analytics"]') || 
-              document.querySelector('script[src*="va.vercel"]') ||
-              document.querySelector('script[src*="analytics"]')) {
-            console.log('✅ Vercel Analytics detected (auto-injected)');
-            analyticsLoaded = true;
-          }
-          
-          // If not loaded after 3 seconds, it might not be enabled in dashboard
-          if (!analyticsLoaded) {
-            console.warn('⚠️ Vercel Analytics not detected.');
-            console.warn('📋 To enable: Vercel Dashboard → Your Project → Settings → Analytics → Enable Web Analytics');
-            console.warn('💡 Note: Analytics only works on Vercel deployments, not localhost');
-          }
-        }, 3000);
-      });
+          // Load Speed Insights
+          var si = document.createElement('script');
+          si.src = 'https://speed-insights.vercel.app/script.js';
+          si.type = 'text/javascript';
+          si.async = true;
+          si.crossOrigin = 'anonymous';
+          document.head.appendChild(si);
+        } else {
+          console.log('ℹ️ Analytics scripts skipped (localhost detected)');
+        }
+      })();
     </script>
     <script>
         // If running via file:// and the project-relative image doesn't exist, try the user's provided path
