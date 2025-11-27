@@ -1589,6 +1589,21 @@ section {
     color: #ffffff;
 }
 
+.contact-email-link,
+.contact-phone-link {
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.contact-email-link:hover,
+.contact-phone-link:hover {
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    transform: translateX(5px);
+}
+
 .contact-item i {
     color: #00d4ff;
     font-size: 1.2rem;
