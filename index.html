@@ -266,13 +266,13 @@ I am a web and mobile application developer with expertise in creating secure, u
                     </div>
                     <form class="contact-form" ng-submit="submitForm()" name="contactForm">
                         <div class="form-group">
-                            <input type="text" ng-model="formData.name" placeholder="Your Name" required>
+                            <input type="text" id="contact-name" name="name" ng-model="formData.name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" ng-model="formData.email" placeholder="Your Email" required>
+                            <input type="email" id="contact-email" name="email" ng-model="formData.email" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <textarea ng-model="formData.message" placeholder="Your Message" rows="5" required></textarea>
+                            <textarea id="contact-message" name="message" ng-model="formData.message" placeholder="Your Message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-disabled="formSubmitting">
                             <span ng-if="!formSubmitting">Send Message</span>
@@ -296,10 +296,31 @@ I am a web and mobile application developer with expertise in creating secure, u
     <!-- Scripts -->
     <script src="app.js"></script>
     <script src="animations.js"></script>
-    <!-- Vercel Analytics -->
-    <script src="https://unpkg.com/@vercel/analytics@latest/dist/analytics.js" defer></script>
+    <!-- Vercel Analytics - Will be auto-injected by Vercel when enabled in dashboard -->
+    <!-- Manual fallback for local development -->
+    <script>
+      if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        (function() {
+          var va = document.createElement('script');
+          va.src = 'https://va.vercel-scripts.com/v1/script.debug.js';
+          va.type = 'text/javascript';
+          va.async = true;
+          document.head.appendChild(va);
+        })();
+      }
+    </script>
     <!-- Vercel Speed Insights -->
-    <script src="https://unpkg.com/@vercel/speed-insights@latest/dist/speed-insights.js" defer></script>
+    <script>
+      if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        (function() {
+          var si = document.createElement('script');
+          si.src = 'https://speed-insights.vercel.app/script.js';
+          si.type = 'text/javascript';
+          si.async = true;
+          document.head.appendChild(si);
+        })();
+      }
+    </script>
     <script>
         // If running via file:// and the project-relative image doesn't exist, try the user's provided path
         (function() {
