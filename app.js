@@ -12,6 +12,18 @@ angular.module('portfolioApp', ['ngAnimate'])
         $scope.heroAnimated = false;
         $scope.formSubmitting = false;
         $scope.formData = { name: '', email: '', message: '' };
+        
+        // Loading screen state - initialize immediately to prevent flash
+        $scope.isLoading = true;
+        $scope.loadingProgress = 0;
+        
+        // Ensure loading screen is visible after Angular processes
+        $timeout(function() {
+            const loadingScreen = document.querySelector('.loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'flex';
+            }
+        }, 0);
 
         // ========================
         // Typewriter animation roles
@@ -286,9 +298,86 @@ angular.module('portfolioApp', ['ngAnimate'])
         };
 
         // ========================
+        // Loading Screen Logic
+        // ========================
+        $scope.initLoadingScreen = function() {
+            // Simulate loading progress
+            const duration = 2000; // 2 seconds total
+            const steps = 100;
+            const interval = duration / steps;
+            let currentStep = 0;
+
+            const progressInterval = setInterval(() => {
+                currentStep++;
+                $scope.loadingProgress = Math.min(currentStep, 100);
+                $scope.$apply();
+
+                if (currentStep >= steps) {
+                    clearInterval(progressInterval);
+                    // Wait for images and assets to load
+                    $timeout(() => {
+                        // Check if all critical assets are loaded
+                        const images = document.querySelectorAll('img');
+                        let loadedImages = 0;
+                        const totalImages = images.length;
+
+                        if (totalImages === 0) {
+                            $scope.finishLoading();
+                            return;
+                        }
+
+                        images.forEach(img => {
+                            if (img.complete) {
+                                loadedImages++;
+                            } else {
+                                img.onload = () => {
+                                    loadedImages++;
+                                    if (loadedImages === totalImages) {
+                                        $scope.finishLoading();
+                                    }
+                                };
+                                img.onerror = () => {
+                                    loadedImages++;
+                                    if (loadedImages === totalImages) {
+                                        $scope.finishLoading();
+                                    }
+                                };
+                            }
+                        });
+
+                        // Fallback timeout if images take too long
+                        $timeout(() => {
+                            $scope.finishLoading();
+                        }, 3000);
+                    }, 300);
+                }
+            }, interval);
+        };
+
+        $scope.finishLoading = function() {
+            $scope.loadingProgress = 100;
+            $scope.$apply();
+            
+            // Wait a moment to show 100%, then start fade-out
+            $timeout(() => {
+                // Trigger fade-out class
+                $scope.isLoading = false;
+                $scope.$apply();
+                
+                // Wait for fade-out animation to complete, then start main animations
+                $timeout(() => {
+                    $scope.initAnimations();
+                }, 900); // Wait for fade-out transition (800ms) + small buffer
+            }, 300); // Brief pause at 100%
+        };
+
+        // ========================
         // Init
         // ========================
-        $scope.initAnimations();
+        // Start loading screen on page load
+        $timeout(() => {
+            $scope.initLoadingScreen();
+        }, 100);
     })
 
     // ========================

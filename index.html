@@ -21,6 +21,23 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body ng-controller="MainController">
+    <!-- Loading Screen -->
+    <div class="loading-screen ng-cloak" ng-class="{'fade-out': !isLoading}" ng-if="isLoading">
+        <div class="loading-content">
+            <h1 class="loading-name">Nakul Soni</h1>
+            <div class="progress-container">
+                <div class="progress-bar" ng-style="{'width': loadingProgress + '%'}" ng-cloak></div>
+            </div>
+            <div class="loading-percentage" ng-cloak><span ng-bind="loadingProgress"></span>%</div>
+        </div>
+        <div class="loading-glow"></div>
+        <div class="loading-particles">
+            <div class="particle" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper" ng-class="{'content-visible': !isLoading}">
     <!-- Navigation -->
     <nav class="navbar" ng-class="{'scrolled': isScrolled}">
         <div class="nav-container">
@@ -273,6 +290,8 @@ I am a web and mobile application developer with expertise in creating secure, u
             <p>&copy; Designed and Developed by Nakul Soni. All rights reserved.</p>
         </div>
     </footer>
+    </div>
+    <!-- End Main Content Wrapper -->
 
     <!-- Scripts -->
     <script src="app.js"></script>
