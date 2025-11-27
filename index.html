@@ -308,7 +308,8 @@ I am a web and mobile application developer with expertise in creating secure, u
         if (isVercelDeployment) {
           // Load Vercel Analytics
           var va = document.createElement('script');
-          va.src = 'https://va.vercel-scripts.com/v1/script.debug.js';
+          // Use production script (remove .debug for production)
+          va.src = 'https://va.vercel-scripts.com/v1/script.js';
           va.type = 'text/javascript';
           va.async = true;
           va.crossOrigin = 'anonymous';
@@ -322,10 +323,16 @@ I am a web and mobile application developer with expertise in creating secure, u
           
           // Load Speed Insights
           var si = document.createElement('script');
-          si.src = 'https://speed-insights.vercel.app/script.js';
+          si.src = 'https://unpkg.com/@vercel/speed-insights@latest/dist/speed-insights.js';
           si.type = 'text/javascript';
           si.async = true;
           si.crossOrigin = 'anonymous';
+          si.onload = function() {
+            console.log('✅ Vercel Speed Insights loaded successfully');
+          };
+          si.onerror = function() {
+            console.warn('⚠️ Speed Insights failed to load (this is optional)');
+          };
           document.head.appendChild(si);
         } else {
           console.log('ℹ️ Analytics scripts skipped (localhost detected)');
