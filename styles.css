@@ -1520,6 +1520,16 @@ section {
     justify-content: center;
     font-size: 4rem;
     color: #ffffff;
+    overflow: hidden;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    display: block;
 }
 
 @keyframes rotate {
