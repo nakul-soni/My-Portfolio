@@ -94,63 +94,443 @@
     }
 }
 
-.progress-container {
+/* ========== HOLOGRAPHIC DATA STREAM LOADING SCREEN ========== */
+
+/* Hologram Grid Background */
+.hologram-grid {
+    position: absolute;
     width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    position: relative;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #00d4ff, #ff00ff, #00d4ff);
-    background-size: 200% 100%;
-    border-radius: 10px;
-    transition: width 0.3s ease-out;
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
-    position: relative;
-    overflow: hidden;
-    animation: progressGradient 2s ease infinite;
+    background-image: 
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridShift 8s linear infinite;
+    pointer-events: none;
+    z-index: 0;
 }
 
-@keyframes progressGradient {
+@keyframes gridShift {
     0% {
-        background-position: 0% 50%;
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(50px);
+    }
+}
+
+/* Stream Particles (flowing background elements) */
+.stream-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, #00a8cc, transparent);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 168, 204, 0.25);
+    animation: particleFlow 6s linear infinite;
+}
+
+.particle-1 { left: 10%; top: 20%; animation-delay: 0s; }
+.particle-2 { left: 20%; top: 40%; animation-delay: 0.5s; }
+.particle-3 { left: 30%; top: 10%; animation-delay: 1s; }
+.particle-4 { left: 40%; top: 60%; animation-delay: 1.5s; }
+.particle-5 { left: 50%; top: 30%; animation-delay: 2s; }
+.particle-6 { left: 60%; top: 70%; animation-delay: 2.5s; }
+.particle-7 { left: 70%; top: 20%; animation-delay: 3s; }
+.particle-8 { left: 80%; top: 50%; animation-delay: 3.5s; }
+.particle-9 { left: 90%; top: 35%; animation-delay: 4s; }
+.particle-10 { left: 15%; top: 80%; animation-delay: 4.5s; }
+
+@keyframes particleFlow {
+    0% {
+        transform: translateY(-100px) translateX(0) scale(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) translateX(20px) scale(0.3);
+        opacity: 0;
+    }
+}
+
+/* Glitch Text Effect */
+.glitch-wrapper {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.glitch-text {
+    position: relative;
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #0099bb, #cc00cc, #0099bb);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: glitchTextFlash 2s ease-in-out infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.glitch-text::before {
+    animation: glitchLeft 2s ease-in-out infinite;
+    color: #0099bb;
+    z-index: -1;
+}
+
+.glitch-text::after {
+    animation: glitchRight 2s ease-in-out infinite;
+    color: #cc00cc;
+    z-index: -2;
+}
+
+@keyframes glitchLeft {
+    0% {
+        clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
+        transform: translate(-2px, -2px);
+    }
+    20% {
+        clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+        transform: translate(-2px, -2px);
+    }
+    40% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        transform: translate(0, 0);
+    }
+    60% {
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+        transform: translate(2px, 2px);
+    }
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
+        transform: translate(-2px, -2px);
+    }
+}
+
+@keyframes glitchRight {
+    0% {
+        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+        transform: translate(2px, 2px);
+    }
+    20% {
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        transform: translate(2px, 2px);
+    }
+    40% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        transform: translate(0, 0);
+    }
+    60% {
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+        transform: translate(-2px, -2px);
+    }
+    100% {
+        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+        transform: translate(2px, 2px);
+    }
+}
+
+@keyframes glitchTextFlash {
+    0%, 100% {
+        text-shadow: 0 0 15px rgba(0, 153, 187, 0.25), 0 0 30px rgba(204, 0, 204, 0.12);
     }
     50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
+        text-shadow: 0 0 25px rgba(0, 153, 187, 0.35), 0 0 45px rgba(204, 0, 204, 0.2);
     }
 }
 
-.progress-bar::after {
-    content: '';
+/* Holographic Loader */
+.holographic-loader {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.loader-glow-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
-    animation: progressShine 1.5s infinite;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(0, 153, 187, 0.08), transparent 70%);
+    border-radius: 50%;
+    animation: glowBreathe 3s ease-in-out infinite;
+    filter: blur(20px);
 }
 
-@keyframes progressShine {
+@keyframes glowBreathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Hex Container */
+.hex-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    animation: hexRotate 8s linear infinite;
+}
+
+@keyframes hexRotate {
     0% {
-        transform: translateX(-100%);
+        transform: rotateX(0deg) rotateY(0deg);
     }
     100% {
-        transform: translateX(100%);
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+
+/* Rotating Hexagon */
+.hex-outer {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 2px solid transparent;
+    border-top: 2px solid #0099bb;
+    border-right: 2px solid #cc00cc;
+    border-bottom: 2px solid #0099bb;
+    border-left: 2px solid #cc00cc;
+    clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+    animation: hexSpin 4s linear infinite;
+}
+
+@keyframes hexSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Morphing Shape */
+.morphing-shape {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at 30% 30%, rgba(0, 153, 187, 0.25), rgba(204, 0, 204, 0.12));
+    filter: blur(2px);
+    animation: morphShape 6s ease-in-out infinite;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+@keyframes morphShape {
+    0%, 100% {
+        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        clip-path: polygon(50% 0%, 90% 10%, 100% 50%, 90% 90%, 50% 100%, 10% 90%, 0% 50%, 10% 10%);
+        transform: scale(1.1) rotate(90deg);
+    }
+    50% {
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        transform: scale(0.9) rotate(180deg);
+    }
+    75% {
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        transform: scale(1.05) rotate(270deg);
+    }
+}
+
+/* SVG Data Flow */
+.data-flow-svg {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    animation: dataFlowRotate 3s linear infinite reverse;
+}
+
+@keyframes dataFlowRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.data-line {
+    fill: none;
+    animation: dataLineFlow 3s ease-in-out infinite;
+}
+
+@keyframes dataLineFlow {
+    0% {
+        stroke-dashoffset: 1000;
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.2;
+    }
+}
+
+.data-node {
+    animation: dataNodePulse 2s ease-in-out infinite;
+}
+
+@keyframes dataNodePulse {
+    0%, 100% {
+        r: 4px;
+        opacity: 0.4;
+    }
+    50% {
+        r: 6px;
+        opacity: 0.7;
+    }
+}
+
+/* Burst Lines */
+.burst-lines {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+}
+
+.burst-line {
+    position: absolute;
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(0, 153, 187, 0.4), transparent);
+    left: 50%;
+    top: 50%;
+    transform-origin: bottom center;
+    animation: burstLine 2s ease-in-out infinite;
+}
+
+.line-1 { transform: translateX(-50%) rotate(0deg); animation-delay: 0s; }
+.line-2 { transform: translateX(-50%) rotate(45deg); animation-delay: 0.2s; }
+.line-3 { transform: translateX(-50%) rotate(90deg); animation-delay: 0.4s; }
+.line-4 { transform: translateX(-50%) rotate(135deg); animation-delay: 0.6s; }
+.line-5 { transform: translateX(-50%) rotate(180deg); animation-delay: 0.8s; }
+.line-6 { transform: translateX(-50%) rotate(225deg); animation-delay: 1s; }
+.line-7 { transform: translateX(-50%) rotate(270deg); animation-delay: 1.2s; }
+.line-8 { transform: translateX(-50%) rotate(315deg); animation-delay: 1.4s; }
+
+@keyframes burstLine {
+    0% {
+        height: 40px;
+        opacity: 0;
+    }
+    50% {
+        height: 100px;
+        opacity: 1;
+    }
+    100% {
+        height: 40px;
+        opacity: 0;
+    }
+}
+
+/* Loading Percentage */
+.digital-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    background: linear-gradient(45deg, #0099bb, #cc00cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 8px rgba(0, 153, 187, 0.2);
+    font-family: 'Courier New', monospace;
+    margin-top: 1rem;
+}
+
+/* Loading Status Text */
+.loading-status {
+    font-size: 0.9rem;
+    color: #0099bb;
+    margin-top: 1.5rem;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    animation: statusBlink 1.5s ease-in-out infinite;
+    font-family: 'Courier New', monospace;
+}
+
+@keyframes statusBlink {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Ambient Glows */
+.ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+.ambient-cyan {
+    width: 400px;
+    height: 400px;
+    background: #0099bb;
+    top: 10%;
+    left: 10%;
+    animation: ambientFloat 8s ease-in-out infinite;
+}
+
+.ambient-magenta {
+    width: 350px;
+    height: 350px;
+    background: #cc00cc;
+    bottom: 10%;
+    right: 10%;
+    animation: ambientFloat 10s ease-in-out infinite reverse;
+}
+
+@keyframes ambientFloat {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(30px, 30px);
     }
 }
 

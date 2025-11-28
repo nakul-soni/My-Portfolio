@@ -21,19 +21,71 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body ng-controller="MainController">
-    <!-- Loading Screen -->
+    <!-- Loading Screen - Holographic Data Stream -->
     <div class="loading-screen ng-cloak" ng-class="{'fade-out': !isLoading}" ng-if="isLoading">
+        <!-- Background stream particles -->
+        <div class="stream-particles">
+            <div class="particle" ng-repeat="n in [1,2,3,4,5,6,7,8,9,10]" ng-class="'particle-' + n"></div>
+        </div>
+        
+        <!-- Hologram grid background -->
+        <div class="hologram-grid"></div>
+        
         <div class="loading-content">
-            <h1 class="loading-name">Nakul Soni</h1>
-            <div class="progress-container">
-                <div class="progress-bar" ng-style="{'width': loadingProgress + '%'}" ng-cloak></div>
+            <!-- Glitch text effect for name -->
+            <div class="glitch-wrapper">
+                <h1 class="loading-name glitch-text" data-text="Nakul Soni">Nakul Soni</h1>
             </div>
-            <div class="loading-percentage" ng-cloak><span ng-bind="loadingProgress"></span>%</div>
+            
+            <!-- Holographic Loader: Morphing Geometric Data Visualization -->
+            <div class="holographic-loader">
+                <!-- Layered background glow -->
+                <div class="loader-glow-bg"></div>
+                
+                <!-- Main hexagon container with perspective -->
+                <div class="hex-container">
+                    <!-- Rotating outer hexagon -->
+                    <div class="hex-outer"></div>
+                    
+                    <!-- Morphing inner shape -->
+                    <div class="morphing-shape"></div>
+                    
+                    <!-- Data flow lines -->
+                    <svg class="data-flow-svg" viewBox="0 0 200 200" width="200" height="200">
+                        <defs>
+                            <linearGradient id="dataGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.8"/>
+                                <stop offset="50%" stop-color="#ff00ff" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.4"/>
+                            </linearGradient>
+                        </defs>
+                        <path class="data-line data-line-1" d="M 100 30 L 50 70 L 50 130 L 100 170 L 150 130 L 150 70 Z" fill="none" stroke="url(#dataGradient)" stroke-width="1.5"/>
+                        <circle class="data-node" cx="100" cy="50" r="4" fill="#00d4ff" opacity="0.8"/>
+                        <circle class="data-node" cx="65" cy="95" r="4" fill="#ff00ff" opacity="0.6"/>
+                        <circle class="data-node" cx="75" cy="155" r="4" fill="#00d4ff" opacity="0.8"/>
+                        <circle class="data-node" cx="135" cy="155" r="4" fill="#ff00ff" opacity="0.6"/>
+                        <circle class="data-node" cx="135" cy="95" r="4" fill="#00d4ff" opacity="0.8"/>
+                    </svg>
+                </div>
+                
+                <!-- Radial burst lines -->
+                <div class="burst-lines">
+                    <div class="burst-line" ng-repeat="n in [1,2,3,4,5,6,7,8]" ng-class="'line-' + n"></div>
+                </div>
+            </div>
+            
+            <!-- Loading percentage with digital style -->
+            <div class="loading-percentage digital-text" ng-cloak>
+                <span ng-bind="loadingProgress"></span>%
+            </div>
+            
+            <!-- Status text -->
+            <div class="loading-status">Initializing...</div>
         </div>
-        <div class="loading-glow"></div>
-        <div class="loading-particles">
-            <div class="particle" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div>
-        </div>
+        
+        <!-- Ambient light glow -->
+        <div class="ambient-glow ambient-cyan"></div>
+        <div class="ambient-glow ambient-magenta"></div>
     </div>
 
     <!-- Main Content Wrapper -->
