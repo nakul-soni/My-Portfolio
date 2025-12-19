@@ -77,20 +77,91 @@ angular.module('portfolioApp', ['ngAnimate'])
         // ========================
         $scope.experience = [
             {
-                position: 'Computer Science and Engineering Student',
-                company: 'Indus University Ahmedabad',
-                duration: '2023 - Present',
-                description: 'Built strong foundations in programming, software development, and cybersecurity through academic learning and hands-on projects.',
-                skills: ['Data Structures & Algorithms', 'OOP', 'Database Management (SQL & NoSQL)', 'OS & Networks', 'Java, Python, C/C++'],
-                visible: true
-            },
-            {
                 position: 'Cyber Security Intern',
                 company: 'Human Initials',
                 duration: 'May 2025 - July 2025',
                 description: 'Worked on vulnerability assessment, penetration testing, and implementing security measures to strengthen system protection.',
                 skills: ['Kali Linux', 'Web Application Hacking', 'Penetration Testing', 'Vulnerability Assessment'],
                 visible: true
+            }
+        ];
+
+        // ========================
+        // Certifications data
+        // ========================
+        $scope.certifications = [
+            {
+                title: 'Certified Ethical Hacker (Practical)',
+                issuer: 'EC-Council',
+                date: 'In Progress',
+                description: 'Hands-on training focused on real-world penetration testing, attack vectors, and defensive strategies.',
+                link: 'https://www.eccouncil.org/train-certify/certified-ethical-hacker-ceh/'
+            },
+            {
+                title: 'Google Cybersecurity Professional Certificate',
+                issuer: 'Google / Coursera',
+                date: '2025',
+                description: 'Completed industry-level labs in security operations, incident response, and threat analysis.',
+                link: 'https://www.coursera.org/professional-certificates/google-cybersecurity'
+            },
+            {
+                title: 'Introduction to Cyber Security',
+                issuer: 'Cisco Networking Academy',
+                date: '2024',
+                description: 'Covered security fundamentals, common attack surfaces, and best practices for securing networks.',
+                link: 'https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity'
+            },
+            {
+                title: 'Java Programming Essentials',
+                issuer: 'Udemy',
+                date: '2024',
+                description: 'Built strong foundations in Java OOP, collections, exception handling, and real-world application patterns.',
+                link: 'https://www.udemy.com/courses/search/?q=java%20programming'
+            }
+        ];
+
+        // ========================
+        // Events data
+        // ========================
+        $scope.events = [
+            {
+                title: 'Cyber Security Summit - Ahmedabad',
+                date: 'March 2025',
+                location: 'Ahmedabad, Gujarat',
+                image: './Images/event-cyber-summit.jpg',
+                description: 'Attended talks and live demos from industry experts on modern attack surfaces, red teaming, and blue team collaboration. It was inspiring to interact with professionals and understand how security is handled at scale.'
+            },
+            {
+                title: 'Hackathon: Secure App Build Challenge',
+                date: 'January 2025',
+                location: 'Indus University',
+                image: './Images/event-hackathon.jpg',
+                description: 'Collaborated with a small team to design and build a secure web application under time pressure. I focused on authentication, input validation, and encrypting sensitive data, which gave me hands-on experience with secure-by-design thinking.'
+            },
+            {
+                title: 'Tech Talk: Modern Web & Mobile Development',
+                date: 'November 2024',
+                location: 'Indus University',
+                image: './Images/event-tech-talk.jpg',
+                description: 'Joined a series of sessions on frontend architectures, Android patterns, and UI/UX best practices. The event helped me connect my classroom knowledge with real-world development workflows.'
+            }
+        ];
+
+        // ========================
+        // Education data
+        // ========================
+        $scope.education = [
+            {
+                degree: 'Bachelor of Technology (Computer Science & Engineering)',
+                institution: 'Indus University, Ahmedabad',
+                duration: '2023 - Present',
+                description: 'Pursuing B.Tech in Computer Science and Engineering with a focus on web development, application security, and modern software engineering practices.'
+            },
+            {
+                degree: 'Higher Secondary Education (Science Stream)',
+                institution: 'Ahmedabad, Gujarat',
+                duration: '2021 - 2023',
+                description: 'Completed higher secondary education with Physics, Chemistry, and Mathematics, building a strong foundation in logical thinking and problem solving.'
             }
         ];
 

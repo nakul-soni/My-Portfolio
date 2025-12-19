@@ -100,6 +100,8 @@
                 <li><a href="#home" ng-click="scrollToSection('home')">Home</a></li>
                 <li><a href="#services" ng-click="scrollToSection('services')">Services</a></li>
                 <li><a href="#experience" ng-click="scrollToSection('experience')">Experience</a></li>
+                <li><a href="#certifications" ng-click="scrollToSection('certifications')">Certifications</a></li>
+                <li><a href="#events" ng-click="scrollToSection('events')">Events</a></li>
                 <li><a href="#projects" ng-click="scrollToSection('projects')">Projects</a></li>
                 <li><a href="#about" ng-click="scrollToSection('about')">About</a></li>
                 <li><a href="#contact" ng-click="scrollToSection('contact')">Contact</a></li>
@@ -204,6 +206,94 @@
                             <div class="skills">
                                 <span class="skill-tag" ng-repeat="skill in exp.skills">{{skill}}</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="certifications-section">
+            <div class="container">
+                <h2 class="section-title">Certifications</h2>
+                <div class="cert-grid">
+                    <div class="cert-card" ng-repeat="cert in certifications">
+                        <div class="cert-card-inner">
+                            <div class="cert-badge">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="cert-content">
+                                <h3 class="cert-title">{{cert.title}}</h3>
+                                <p class="cert-meta">
+                                    <span class="cert-issuer">{{cert.issuer}}</span>
+                                    <span class="cert-date" ng-if="cert.date">&bull; {{cert.date}}</span>
+                                </p>
+                                <p class="cert-description" ng-if="cert.description">
+                                    {{cert.description}}
+                                </p>
+                                <div class="cert-actions">
+                                    <a class="btn btn-primary cert-link"
+                                       ng-href="{{cert.link}}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <span>View Certificate</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="events-section">
+            <div class="hero-background">
+                <canvas id="three-canvas-events"></canvas>
+                <div class="particles"></div>
+            </div>
+            <div class="container">
+                <h2 class="section-title">Events</h2>
+                <div class="events-grid">
+                    <div class="event-card" ng-repeat="event in events">
+                        <div class="event-image-wrapper">
+                            <img class="event-image" ng-src="{{event.image}}" alt="{{event.title}}">
+                            <div class="event-date-pill">
+                                <span class="event-date-text">{{event.date}}</span>
+                            </div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">{{event.title}}</h3>
+                            <p class="event-location" ng-if="event.location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{event.location}}</span>
+                            </p>
+                            <p class="event-description">
+                                {{event.description}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="education-section">
+            <div class="container">
+                <h2 class="section-title">Education</h2>
+                <div class="education-timeline">
+                    <div class="education-item" ng-repeat="edu in education">
+                        <div class="education-marker"></div>
+                        <div class="education-card">
+                            <div class="education-header">
+                                <h3>{{edu.degree}}</h3>
+                                <span class="education-institution">{{edu.institution}}</span>
+                                <span class="education-duration">{{edu.duration}}</span>
+                            </div>
+                            <p class="education-description">
+                                {{edu.description}}
+                            </p>
                         </div>
                     </div>
                 </div>

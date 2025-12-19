@@ -873,6 +873,8 @@ body {
 
 /* Make section backgrounds usable in other sections */
 .experience-section,
+.certifications-section,
+.events-section,
 .projects-section,
 .contact-section {
     position: relative;
@@ -1076,6 +1078,8 @@ body {
 
 /* Ensure container content sits above the background */
 .experience-section .container,
+.certifications-section .container,
+.events-section .container,
 .projects-section .container,
 .contact-section .container {
     position: relative;
@@ -1418,6 +1422,343 @@ section {
     background: #0a0a0a;
 }
 
+/* Certifications Section */
+.certifications-section {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
+    margin-top: 3rem;
+}
+
+.cert-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.cert-card-inner {
+    position: relative;
+    padding: 1.75rem 1.6rem 1.6rem;
+    height: 100%;
+    display: flex;
+    gap: 1.1rem;
+}
+
+.cert-card::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at 0% 0%, rgba(0, 212, 255, 0.18), transparent 55%),
+                radial-gradient(circle at 100% 100%, rgba(255, 0, 255, 0.15), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.cert-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.6);
+    border-color: rgba(0, 212, 255, 0.45);
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 20, 20, 0.96));
+}
+
+.cert-card:hover::before {
+    opacity: 1;
+}
+
+.cert-badge {
+    flex: 0 0 auto;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.16), rgba(255, 0, 255, 0.14));
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.35);
+    color: #ffffff;
+}
+
+.cert-badge i {
+    font-size: 1.4rem;
+}
+
+.cert-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.cert-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.cert-meta {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+
+.cert-issuer {
+    color: #00d4ff;
+    font-weight: 500;
+}
+
+.cert-date {
+    margin-left: 0.35rem;
+    opacity: 0.85;
+}
+
+.cert-description {
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    line-height: 1.6;
+    margin-top: 0.25rem;
+}
+
+.cert-actions {
+    margin-top: 0.6rem;
+}
+
+.cert-link {
+    padding-inline: 1rem;
+    padding-block: 0.55rem;
+    font-size: 0.9rem;
+}
+
+.cert-link i {
+    font-size: 0.85rem;
+}
+
+/* Events Section */
+.events-section {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.event-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 52px rgba(0, 0, 0, 0.6);
+    border-color: rgba(0, 212, 255, 0.45);
+}
+
+.event-image-wrapper {
+    position: relative;
+    height: 210px;
+    overflow: hidden;
+}
+
+.event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.35s ease;
+}
+
+.event-card:hover .event-image {
+    transform: scale(1.07);
+}
+
+.event-date-pill {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 0% 0%, rgba(0, 212, 255, 0.35), transparent 55%),
+                radial-gradient(circle at 100% 100%, rgba(255, 0, 255, 0.25), transparent 55%),
+                rgba(6, 16, 24, 0.96);
+    border: 1px solid rgba(0, 212, 255, 0.8);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.75);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+ }
+
+.event-date-pill::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #00d4ff;
+    box-shadow: 0 0 6px rgba(0, 212, 255, 0.9);
+}
+
+.event-date-text {
+    font-size: 0.72rem;
+    color: #e0f7ff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.event-content {
+    padding: 1.5rem 1.5rem 1.6rem;
+}
+
+.event-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.35rem;
+}
+
+.event-location {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #9ad9ff;
+    margin-bottom: 0.7rem;
+}
+
+.event-location i {
+    font-size: 0.9rem;
+    color: #00d4ff;
+}
+
+.event-description {
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .event-image-wrapper {
+        height: 190px;
+    }
+}
+
+/* Education Section */
+.education-section {
+    background: #0a0a0a;
+}
+
+.education-timeline {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-left: 0.75rem;
+}
+
+.education-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #00d4ff, #ff00ff);
+    opacity: 0.8;
+}
+
+.education-item {
+    position: relative;
+    padding-left: 2.4rem;
+    margin-bottom: 2.5rem;
+}
+
+.education-item:last-child {
+    margin-bottom: 0;
+}
+
+.education-marker {
+    position: absolute;
+    left: 2px;
+    top: 0.4rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #00d4ff 0%, #ff00ff 65%, transparent 100%);
+    box-shadow: 0 0 14px rgba(0, 212, 255, 0.8);
+}
+
+.education-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 1.3rem 1.4rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.education-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-bottom: 0.6rem;
+}
+
+.education-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #00d4ff;
+}
+
+.education-institution {
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.education-duration {
+    font-size: 0.85rem;
+    color: #aaaaaa;
+}
+
+.education-description {
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .education-timeline::before {
+        left: 8px;
+    }
+
+    .education-item {
+        padding-left: 2.1rem;
+    }
+
+    .education-marker {
+        left: 0;
+    }
+}
 .timeline {
     position: relative;
     max-width: 720px;

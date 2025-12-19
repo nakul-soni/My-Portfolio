@@ -443,6 +443,57 @@ class GSAPAnimations {
             });
         });
 
+        // Certification cards animation
+        gsap.utils.toArray('.cert-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play none none reverse'
+                },
+                duration: 0.8,
+                y: 40,
+                opacity: 0,
+                ease: 'power3.out',
+                delay: index * 0.12
+            });
+        });
+
+        // Events cards animation
+        gsap.utils.toArray('.event-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play none none reverse'
+                },
+                duration: 0.8,
+                y: 40,
+                opacity: 0,
+                ease: 'power3.out',
+                delay: index * 0.12
+            });
+        });
+
+        // Education timeline animation
+        gsap.utils.toArray('.education-item').forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play none none reverse'
+                },
+                duration: 0.8,
+                x: -40,
+                opacity: 0,
+                ease: 'power3.out',
+                delay: index * 0.12
+            });
+        });
+
         // Timeline items animation
         gsap.utils.toArray('.timeline-item').forEach((item, index) => {
             gsap.from(item, {
@@ -650,6 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvasIds = [
         'three-canvas',
         'three-canvas-experience',
+        'three-canvas-events',
         'three-canvas-projects',
         'three-canvas-contact'
     ];
