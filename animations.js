@@ -1,3 +1,347 @@
+// Interactive Hero 3D Element - Futuristic Abstract Composition
+class Hero3DElement {
+    constructor(canvasId) {
+        this.scene = null;
+        this.camera = null;
+        this.renderer = null;
+        this.mainGroup = null;
+        this.centralShape = null;
+        this.orbitingShapes = [];
+        this.particles = null;
+        this.wireframe = null;
+        this.animationId = null;
+        this.mouse = { x: 0, y: 0 };
+        this.canvasId = canvasId;
+        this.time = 0;
+
+        this.init();
+        this.bindEvents();
+        this.start();
+    }
+
+    init() {
+        const canvas = document.getElementById(this.canvasId);
+        if (!canvas) return;
+
+        const isMobile = window.innerWidth < 768;
+
+        // Scene
+        this.scene = new THREE.Scene();
+
+        // Camera - closer for hero element
+        this.camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        this.camera.position.set(0, 0, 12);
+
+        // Renderer
+        this.renderer = new THREE.WebGLRenderer({ 
+            canvas: canvas, 
+            alpha: true, 
+            antialias: !isMobile,
+            powerPreference: "high-performance"
+        });
+        this.renderer.setClearColor(0x000000, 0);
+        this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+
+        // Create futuristic abstract composition
+        this.createAbstractComposition();
+
+        // Create particle system around the object
+        this.createParticles();
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        this.scene.add(ambientLight);
+
+        const directionalLight1 = new THREE.DirectionalLight(0x00d4ff, 0.8);
+        directionalLight1.position.set(5, 5, 5);
+        this.scene.add(directionalLight1);
+
+        const directionalLight2 = new THREE.DirectionalLight(0xff00ff, 0.6);
+        directionalLight2.position.set(-5, -5, 5);
+        this.scene.add(directionalLight2);
+
+        const pointLight = new THREE.PointLight(0x00d4ff, 1.2, 100);
+        pointLight.position.set(0, 2, 8);
+        this.scene.add(pointLight);
+
+        // Handle resize
+        const updateSize = () => {
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+            if (width > 0 && height > 0) {
+                this.renderer.setSize(width, height);
+                this.camera.aspect = width / height;
+                this.camera.updateProjectionMatrix();
+            }
+        };
+
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(updateSize);
+            resizeObserver.observe(canvas);
+        } else {
+            window.addEventListener('resize', updateSize);
+        }
+    }
+
+    createAbstractComposition() {
+        // Main group to hold all elements
+        this.mainGroup = new THREE.Group();
+
+        // Central shape - Octahedron (diamond-like)
+        const centralGeometry = new THREE.OctahedronGeometry(1.8, 0);
+        const centralMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00d4ff,
+            emissive: 0x003366,
+            shininess: 100,
+            transparent: true,
+            opacity: 0.85,
+            side: THREE.DoubleSide
+        });
+        this.centralShape = new THREE.Mesh(centralGeometry, centralMaterial);
+        this.mainGroup.add(this.centralShape);
+
+        // Wireframe overlay for tech aesthetic
+        const wireframeGeometry = new THREE.OctahedronGeometry(1.8, 0);
+        const wireframeMaterial = new THREE.MeshBasicMaterial({
+            color: 0xff00ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.4
+        });
+        this.wireframe = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+        this.mainGroup.add(this.wireframe);
+
+        // Inner glowing core
+        const coreGeometry = new THREE.SphereGeometry(0.6, 16, 16);
+        const coreMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00ffff,
+            emissive: 0x00ffff,
+            transparent: true,
+            opacity: 0.7
+        });
+        const core = new THREE.Mesh(coreGeometry, coreMaterial);
+        this.mainGroup.add(core);
+
+        // Orbiting shapes - smaller geometric elements
+        const orbitCount = 6;
+        const orbitRadius = 2.5;
+        
+        for (let i = 0; i < orbitCount; i++) {
+            const angle = (i / orbitCount) * Math.PI * 2;
+            const shapeGroup = new THREE.Group();
+            
+            // Create a small tetrahedron
+            const orbitGeometry = new THREE.TetrahedronGeometry(0.4, 0);
+            const orbitMaterial = new THREE.MeshPhongMaterial({
+                color: i % 2 === 0 ? 0x00d4ff : 0xff00ff,
+                emissive: i % 2 === 0 ? 0x002244 : 0x440022,
+                shininess: 80,
+                transparent: true,
+                opacity: 0.9
+            });
+            const orbitShape = new THREE.Mesh(orbitGeometry, orbitMaterial);
+            shapeGroup.add(orbitShape);
+
+            // Add wireframe to orbiting shapes
+            const orbitWireGeometry = new THREE.TetrahedronGeometry(0.4, 0);
+            const orbitWireMaterial = new THREE.MeshBasicMaterial({
+                color: i % 2 === 0 ? 0x00d4ff : 0xff00ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            });
+            const orbitWire = new THREE.Mesh(orbitWireGeometry, orbitWireMaterial);
+            shapeGroup.add(orbitWire);
+
+            // Position in orbit
+            shapeGroup.position.x = Math.cos(angle) * orbitRadius;
+            shapeGroup.position.y = Math.sin(angle * 0.5) * 1.5;
+            shapeGroup.position.z = Math.sin(angle) * orbitRadius;
+            
+            // Store orbit properties
+            shapeGroup.userData = {
+                angle: angle,
+                radius: orbitRadius,
+                speed: 0.5 + Math.random() * 0.3,
+                verticalSpeed: 0.3 + Math.random() * 0.2
+            };
+            
+            this.orbitingShapes.push(shapeGroup);
+            this.mainGroup.add(shapeGroup);
+        }
+
+        // Add ring structure around the composition
+        const ringGeometry = new THREE.TorusGeometry(2.2, 0.05, 8, 32);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00d4ff,
+            emissive: 0x00d4ff,
+            transparent: true,
+            opacity: 0.6
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2;
+        this.mainGroup.add(ring);
+
+        // Add second ring rotated differently
+        const ring2Geometry = new THREE.TorusGeometry(2.2, 0.05, 8, 32);
+        const ring2Material = new THREE.MeshBasicMaterial({
+            color: 0xff00ff,
+            emissive: 0xff00ff,
+            transparent: true,
+            opacity: 0.6
+        });
+        const ring2 = new THREE.Mesh(ring2Geometry, ring2Material);
+        ring2.rotation.z = Math.PI / 2;
+        ring2.rotation.y = Math.PI / 4;
+        this.mainGroup.add(ring2);
+
+        // Add to scene
+        this.scene.add(this.mainGroup);
+    }
+
+    createParticles() {
+        const particleCount = 200;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const radius = 3 + Math.random() * 4;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+
+            positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i3 + 2] = radius * Math.cos(phi);
+
+            // Alternate between cyan and magenta colors
+            const color = new THREE.Color();
+            if (i % 2 === 0) {
+                color.setRGB(0, 0.83, 1); // Cyan #00d4ff
+            } else {
+                color.setRGB(1, 0, 1); // Magenta #ff00ff
+            }
+            colors[i3] = color.r;
+            colors[i3 + 1] = color.g;
+            colors[i3 + 2] = color.b;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const material = new THREE.PointsMaterial({
+            size: 0.1,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+        });
+
+        this.particles = new THREE.Points(geometry, material);
+        this.scene.add(this.particles);
+    }
+
+    animate() {
+        this.animationId = requestAnimationFrame(() => this.animate());
+
+        this.time += 0.01;
+
+        // Animate main composition
+        if (this.mainGroup) {
+            // Floating animation
+            this.mainGroup.position.y = Math.sin(this.time * 0.4) * 0.15;
+            
+            // Rotation based on mouse and time
+            this.mainGroup.rotation.x = Math.sin(this.time * 0.2) * 0.1 + this.mouse.y * 0.3;
+            this.mainGroup.rotation.y = this.time * 0.3 + this.mouse.x * 0.5;
+            this.mainGroup.rotation.z = Math.sin(this.time * 0.15) * 0.05;
+        }
+
+        // Animate central shape
+        if (this.centralShape) {
+            this.centralShape.rotation.x += 0.005;
+            this.centralShape.rotation.y += 0.008;
+        }
+
+        // Animate wireframe
+        if (this.wireframe) {
+            this.wireframe.rotation.x -= 0.003;
+            this.wireframe.rotation.y -= 0.005;
+        }
+
+        // Animate orbiting shapes
+        this.orbitingShapes.forEach((shapeGroup, index) => {
+            const userData = shapeGroup.userData;
+            if (userData) {
+                // Update orbit angle
+                userData.angle += userData.speed * 0.01;
+                
+                // Calculate new position
+                const angle = userData.angle;
+                const verticalOffset = Math.sin(this.time * userData.verticalSpeed + index) * 1.5;
+                
+                shapeGroup.position.x = Math.cos(angle) * userData.radius;
+                shapeGroup.position.y = verticalOffset;
+                shapeGroup.position.z = Math.sin(angle) * userData.radius;
+                
+                // Rotate the shape itself
+                shapeGroup.rotation.x += 0.01;
+                shapeGroup.rotation.y += 0.015;
+            }
+        });
+
+        // Rotate particles
+        if (this.particles) {
+            this.particles.rotation.x = this.time * 0.08;
+            this.particles.rotation.y = this.time * 0.12;
+        }
+
+        // Interactive camera movement
+        this.camera.position.x += (this.mouse.x * 0.4 - this.camera.position.x) * 0.05;
+        this.camera.position.y += (-this.mouse.y * 0.4 - this.camera.position.y) * 0.05;
+        this.camera.lookAt(this.scene.position);
+
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    bindEvents() {
+        const canvas = document.getElementById(this.canvasId);
+        if (!canvas) return;
+
+        const onMouseMove = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            this.mouse.x = (event.clientX - cx) / rect.width;
+            this.mouse.y = (event.clientY - cy) / rect.height;
+        };
+
+        canvas.addEventListener('mousemove', onMouseMove);
+
+        // Reset on mouse leave
+        canvas.addEventListener('mouseleave', () => {
+            this.mouse.x = 0;
+            this.mouse.y = 0;
+        });
+    }
+
+    start() {
+        this.animate();
+    }
+
+    destroy() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+        }
+        if (this.renderer) {
+            this.renderer.dispose();
+        }
+    }
+}
+
 // Three.js 3D Background and Animations
 class ThreeJSBackground {
     constructor(canvasId) {
@@ -697,6 +1041,11 @@ class SmoothScroll {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Hero 3D Element
+    if (document.getElementById('hero-3d-canvas')) {
+        window.hero3D = new Hero3DElement('hero-3d-canvas');
+    }
+
     // Initialize Three.js backgrounds for all relevant canvases
     const canvasIds = [
         'three-canvas',
@@ -721,6 +1070,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', function() {
+    if (window.hero3D) {
+        window.hero3D.destroy();
+    }
     if (window.threeBackgrounds && window.threeBackgrounds.length) {
         window.threeBackgrounds.forEach(bg => bg.destroy());
     }

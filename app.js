@@ -152,7 +152,7 @@ angular.module('portfolioApp', ['ngAnimate'])
             },
             {
                 degree: 'Higher Secondary Education (Science Stream)',
-                institution: 'Ahmedabad, Gujarat',
+                institution: 'Neemuch, Madhya Pradesh',
                 duration: '2021 - 2023',
                 description: 'Completed higher secondary education with Physics, Chemistry, and Mathematics, building a strong foundation in logical thinking and problem solving.'
             }

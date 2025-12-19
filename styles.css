@@ -918,35 +918,38 @@ body {
     flex: 1 1 45%;
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* place image to the right */
+    justify-content: flex-end;
     min-width: 260px;
 }
 
-.hero-image img {
-    width: auto;
-    max-width: 72%; /* increased from 60% to make the image larger on desktop */
-    height: auto;
-    object-fit: contain; /* ensure full image is visible */
-    max-height: 92vh; /* allow image to scale but remain within viewport */
-    border-radius: 8px;
-    /* Remove heavy shadow so image doesn't look like a floating card */
-    box-shadow: none;
-    /* Blend the image into the page */
-    opacity: 0.95;
-    mix-blend-mode: overlay;
-    filter: brightness(0.96) saturate(0.94) contrast(0.98);
-    transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s ease;
-    /* Nudge image slightly to the right on larger screens */
-    transform: translateX(8%);
-    display: block;
+.hero-3d-container {
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Extra-large screens: make the hero image even more prominent */
+#hero-3d-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    cursor: pointer;
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.3));
+    transition: filter 0.3s ease;
+}
+
+#hero-3d-canvas:hover {
+    filter: drop-shadow(0 0 50px rgba(0, 212, 255, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 255, 0.3));
+}
+
+/* Extra-large screens: make the 3D element even more prominent */
 @media (min-width: 1400px) {
-    .hero-image img {
-        max-width: 78%;
-        transform: translateX(10%);
-        max-height: 95vh;
+    .hero-3d-container {
+        max-width: 600px;
+        height: 600px;
     }
 }
 
@@ -957,29 +960,27 @@ body {
         padding: 2rem 1rem;
     }
 
-    /* Mobile: stack with text left-aligned and image centered below */
+    /* Mobile: stack with text left-aligned and 3D element centered below */
     .hero-right {
         order: 2;
         width: 100%;
         margin-top: 1.25rem;
         display: flex;
-        justify-content: center; /* center the image horizontally */
+        justify-content: center;
         align-items: center;
     }
 
     .hero-left {
         order: 1;
-        text-align: left; /* align text to the left on mobile per user request */
+        text-align: left;
         width: 100%;
     }
 
-    /* Reset transform on small screens so image centers naturally */
-    .hero-image img {
-        transform: none;
-        max-width: 420px; /* allow larger image within stacked layout */
+    /* Adjust 3D container for mobile */
+    .hero-3d-container {
+        max-width: 100%;
+        height: 350px;
         max-height: 50vh;
-        display: block;
-        margin: 0 auto; /* ensure image is centered in its container */
     }
 }
 
@@ -1005,13 +1006,10 @@ body {
     .hero-title .greet { font-size: 2rem; }
     .hero-title .role { font-size: 1.6rem; }
 
-    /* Make the hero image more spacious on tablet */
-    .hero-image img {
-        max-width: 44%;
-        transform: translateX(8%);
-        margin-left: 0.5rem;
-        opacity: 0.98;
-        max-height: 70vh;
+    /* Make the 3D element more spacious on tablet */
+    .hero-3d-container {
+        max-width: 400px;
+        height: 400px;
     }
 
     /* Keep buttons left-aligned with text on tablet */
@@ -1027,15 +1025,11 @@ body {
     .hero-title .greet { font-size: 1.2rem; }
     .hero-title .role { font-size: 1rem; }
 
-    /* Larger, more spacious image centered */
+    /* Larger, more spacious 3D element centered */
     .hero-right { width: 100%; }
-    .hero-image img {
-        max-width: 90%;
-        transform: none;
-        margin: 0 auto;
-        opacity: 1;
-        filter: brightness(0.98) saturate(0.95) contrast(0.98);
-        border-radius: 6px;
+    .hero-3d-container {
+        max-width: 100%;
+        height: 300px;
         max-height: 45vh;
     }
 

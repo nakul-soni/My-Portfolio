@@ -145,9 +145,8 @@
                     </div>
                 </div>
                 <div class="hero-right">
-                    <div class="hero-image">
-                        <!-- Default to project Images folder; fallback to local file path when opened via file:// -->
-                        <img id="hero-img" src="Images/homebg3.png" alt="hero image">
+                    <div class="hero-3d-container">
+                        <canvas id="hero-3d-canvas"></canvas>
                     </div>
                 </div>
             </div>
@@ -481,21 +480,6 @@ I am a web and mobile application developer with expertise in creating secure, u
           console.log('ℹ️ Analytics scripts skipped (localhost detected)');
         }
       })();
-    </script>
-    <script>
-        // If running via file:// and the project-relative image doesn't exist, try the user's provided path
-        (function() {
-            try {
-                var img = document.getElementById('hero-img');
-                // If image fails to load, use absolute fallback
-                img.onerror = function() {
-                    // Absolute path provided by user
-                    img.src = 'c:\\Users\\nakul\\Downloads\\homebg3.png';
-                };
-            } catch (e) {
-                // ignore
-            }
-        })();
     </script>
 </body>
 </html>
