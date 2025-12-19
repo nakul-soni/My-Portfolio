@@ -791,7 +791,8 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
 }
 
 .nav-menu a {
@@ -1534,7 +1535,7 @@ section {
 
 .cert-link {
     padding-inline: 1rem;
-    padding-block: auto;
+    padding-block: 0.55rem;
     font-size: 0.9rem;
 }
 
