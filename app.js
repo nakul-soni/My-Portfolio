@@ -91,32 +91,25 @@ angular.module('portfolioApp', ['ngAnimate'])
         // ========================
         $scope.certifications = [
             {
-                title: 'Certified Ethical Hacker (Practical)',
-                issuer: 'EC-Council',
-                date: 'In Progress',
-                description: 'Hands-on training focused on real-world penetration testing, attack vectors, and defensive strategies.',
-                link: 'https://www.eccouncil.org/train-certify/certified-ethical-hacker-ceh/'
-            },
-            {
-                title: 'Google Cybersecurity Professional Certificate',
-                issuer: 'Google / Coursera',
-                date: '2025',
-                description: 'Completed industry-level labs in security operations, incident response, and threat analysis.',
-                link: 'https://www.coursera.org/professional-certificates/google-cybersecurity'
-            },
-            {
-                title: 'Introduction to Cyber Security',
-                issuer: 'Cisco Networking Academy',
-                date: '2024',
-                description: 'Covered security fundamentals, common attack surfaces, and best practices for securing networks.',
-                link: 'https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity'
-            },
-            {
-                title: 'Java Programming Essentials',
+                title: 'Android Application Development using Java and Kotlin',
                 issuer: 'Udemy',
-                date: '2024',
-                description: 'Built strong foundations in Java OOP, collections, exception handling, and real-world application patterns.',
-                link: 'https://www.udemy.com/courses/search/?q=java%20programming'
+                date: 'July 2024',
+                description: 'Certificate of Completion for “The Complete Android 15 Course – Build 82 Apps (Java & Kotlin)” on Udemy. Gained hands-on experience in Android app development using Java and Kotlin, covering modern Android 15 features, real-world app building, and best practices across 82 practical projects.',
+                link: 'https://drive.google.com/file/d/1d7IEi_v0NPAsV_ZnHAOEKj8MGKdI4Wd0/view?usp=sharing'
+            },
+            {
+                title: 'Digital Productivity Certificate',
+                issuer: 'UNICEF',
+                date: 'August 2024',
+                description: 'Certificate of Completion awarded by NIIT Foundation under the Passport to Earning initiative in collaboration with UNICEF, for successfully completing the Digital Productivity course. This program enhanced practical skills in digital tools, efficiency, and professional productivity.',
+                link: 'https://drive.google.com/file/d/1E9sni5CSb-cNm6ftk9CyRita-OUsHLOD/view?usp=sharing'
+            },
+            {
+                title: 'Deloitte Cybersecurity Job Simulation',
+                issuer: 'Forage',
+                date: 'December 2025',
+                description: 'Certificate of Completion for the Deloitte Cyber Job Simulation, where I completed practical, hands-on tasks in cybersecurity, gaining exposure to real-world security analysis, threat identification, and industry-aligned cyber practices used in professional environments.',
+                link: 'https://drive.google.com/file/d/1GHS63pz7fDnr4pi26a19VBqVqSyReV36/view?usp=sharing'
             }
         ];
 
@@ -125,25 +118,25 @@ angular.module('portfolioApp', ['ngAnimate'])
         // ========================
         $scope.events = [
             {
-                title: 'Cyber Security Summit - Ahmedabad',
-                date: 'March 2025',
-                location: 'Ahmedabad, Gujarat',
+                title: 'Google Developer Groups (GDG) Gandhinagar',
+                date: 'November 2025',
+                location: 'Gandhinagar, Gujarat',
                 image: './Images/event-cyber-summit.jpg',
-                description: 'Attended talks and live demos from industry experts on modern attack surfaces, red teaming, and blue team collaboration. It was inspiring to interact with professionals and understand how security is handled at scale.'
+                description: 'Attending Google Developer Fest 2025 in Gandhinagar was an inspiring experience. I gained valuable insights into the latest Google technologies, developer tools, and industry trends through expert-led talks and sessions. The event also provided a great opportunity to network with developers, learn from real-world use cases, and strengthen my passion for building impactful technology solutions.'
             },
             {
-                title: 'Hackathon: Secure App Build Challenge',
-                date: 'January 2025',
-                location: 'Indus University',
+                title: 'Hackathon: Tic Tech Toe 2025',
+                date: 'April 2025',
+                location: 'DAIICT, Gandhinagar',
                 image: './Images/event-hackathon.jpg',
-                description: 'Collaborated with a small team to design and build a secure web application under time pressure. I focused on authentication, input validation, and encrypting sensitive data, which gave me hands-on experience with secure-by-design thinking.'
+                description: 'Participated in the Tic Tech Toe 2025 hackathon, where I collaborated with a team to design and build a secure web application under time pressure. I focused on authentication, input validation, and encrypting sensitive data, which gave me hands-on experience with secure-by-design thinking.'
             },
             {
-                title: 'Tech Talk: Modern Web & Mobile Development',
-                date: 'November 2024',
+                title: 'Hackathon: Smart India Hackathon 2025',
+                date: 'September 2025',
                 location: 'Indus University',
                 image: './Images/event-tech-talk.jpg',
-                description: 'Joined a series of sessions on frontend architectures, Android patterns, and UI/UX best practices. The event helped me connect my classroom knowledge with real-world development workflows.'
+                description: 'Participated in Smart India Hackathon (SIH) 2025 and successfully cleared the internal round, gaining hands-on experience in problem-solving, teamwork, and developing innovative solutions under competitive conditions.'
             }
         ];
 
