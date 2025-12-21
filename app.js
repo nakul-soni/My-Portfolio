@@ -186,6 +186,15 @@ angular.module('portfolioApp', ['ngAnimate'])
                 githubUrl: 'https://github.com/nakul-soni/PackPal-Groups-Logistics-Planner-',
                 technologies: ['HTML', 'CSS', 'JavaScript', 'Firebase', 'Bootstrap'],
                 hovered: false
+            },
+            {
+                title: 'TravelAgent AI - Premium Travel Architect',
+                description: "AI-powered travel planner built with Google ADK for budget-constrained, day-wise itinerary generation.",
+                image: './Images/travelagent Thumbnail.png',
+                liveUrl: 'https:travel-agent-ai-two.vercel.app',
+                githubUrl: 'https://github.com/nakul-soni/TravelAgent-AI',
+                technologies: ['HTML', 'CSS', 'JavaScript', 'Firebase', 'Bootstrap'],
+                hovered: false
             }
         ];
 
