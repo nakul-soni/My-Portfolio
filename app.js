@@ -191,7 +191,7 @@ angular.module('portfolioApp', ['ngAnimate'])
                 title: 'TravelAgent AI - Premium Travel Architect',
                 description: "AI-powered travel planner built with Google ADK for budget-constrained, day-wise itinerary generation.",
                 image: './Images/travelagent Thumbnail.png',
-                liveUrl: 'https:travel-agent-ai-two.vercel.app',
+                liveUrl: 'https://travel-agent-ai-two.vercel.app',
                 githubUrl: 'https://github.com/nakul-soni/TravelAgent-AI',
                 technologies: ['HTML', 'CSS', 'JavaScript', 'Firebase', 'Bootstrap'],
                 hovered: false
