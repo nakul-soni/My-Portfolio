@@ -1,0 +1,54 @@
+# Node dependencies
+node_modules/
+
+# Environment files (ignore all, but keep example files)
+.env
+dotenv.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+.tmp/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Vercel
+.vercel/
+.vercel_build_output/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.vscode
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+.envrc
+pids/
+*.pid
+
+# Ignore local environment and secret files
+.secret
+
+# Optional: lockfiles are usually committed; remove the next line if you prefer to keep them
+# package-lock.json
+
+# Keep project-specific exceptions here
+# Example: if you need to track a certain build output, add a negation rule like:
+# !/build/important-file.js
